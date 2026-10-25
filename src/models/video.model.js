@@ -19,12 +19,40 @@ import mongoose from "mongoose";
 const videoSchema = new mongoose.Schema(
   {
     // TODO: title
+    title:{
+      type: String,
+      required: [true, "title is required"],
+      trim: true,
+      max:120
+    },
+    channelId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Channel",
+      required:true
+    },
+    slug:{
+      type:String,
+      required:true,
+      unique:true,
+      lowercase: true,
+    },
+    views:{
+      type:Number,
+      default:0,
+      min:0
+    },
+    status:{
+      type:String,
+      enum: ["draft", "published"],
+      default:"draft"
+    }
     // TODO: channelId
     // TODO: slug
     // TODO: views
     // TODO: status
   },
-  { /* TODO: timestamps */ }
+  { /* TODO: timestamps */ timestamps:true}
 );
 
-// TODO: export const Video = mongoose.model("Video", videoSchema);
+// TODO: 
+export const Video = mongoose.model("Video", videoSchema);
